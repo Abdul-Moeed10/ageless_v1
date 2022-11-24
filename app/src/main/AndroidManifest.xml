@@ -16,6 +16,12 @@
         <activity
             android:name=".Sign_Up"
             android:exported="false"/>
+        <activity
+            android:name=".Set_Password"
+            android:exported="false"/>
+        <activity
+            android:name=".Profile_Setup"
+            android:exported="false"/>
 
         <activity
             android:name=".MainActivity"
