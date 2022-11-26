@@ -8,8 +8,6 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical" >
-
-
     <!--        <Button-->
 <!--            android:id="@+id/login_button"-->
 <!--            android:layout_width="wrap_content"-->
