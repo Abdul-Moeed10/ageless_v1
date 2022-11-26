@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "35011999774",
+    "firebase_url": "https://ageless-2b7c7-default-rtdb.firebaseio.com",
+    "project_id": "ageless-2b7c7",
+    "storage_bucket": "ageless-2b7c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35011999774:android:be776491067ed303ba560f",
+        "android_client_info": {
+          "package_name": "com.example.ageless_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35011999774-c5mjkoj42og75s46vl78vken11sl1ihl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY817gOogg5pxOAA9DtDd7DsYe6NEgsAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35011999774-c5mjkoj42og75s46vl78vken11sl1ihl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
