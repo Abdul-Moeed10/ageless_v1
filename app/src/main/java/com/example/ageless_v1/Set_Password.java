@@ -50,7 +50,6 @@ public class Set_Password extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerNewUser();
-
             }
         });
 
