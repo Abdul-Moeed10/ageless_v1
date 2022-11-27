@@ -35,14 +35,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/user_full_name"
+        android:id="@+id/user_email"
         android:layout_width="@dimen/_270sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:background="@drawable/registration_email_background"
         android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="phone"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:padding="@dimen/_15sdp"
         android:textColor="@color/black"
         android:textColorHint="#000000"
@@ -66,10 +66,10 @@
         android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/user_password" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/user_password"
         android:layout_width="@dimen/_270sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -82,7 +82,7 @@
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_full_name" />
+        app:layout_constraintTop_toBottomOf="@+id/user_email" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -139,8 +139,8 @@
 
         android:textSize="@dimen/_12sdp"
         android:text="Forgot Password?"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/user_password"
+        app:layout_constraintTop_toBottomOf="@+id/user_password" />
 
     <TextView
         android:id="@+id/textView3"
