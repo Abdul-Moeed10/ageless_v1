@@ -1,5 +1,6 @@
 package com.example.ageless_v1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -52,12 +53,15 @@ public class Sign_Up extends AppCompatActivity {
                 else{
                     add_to_database(full_name,phone_no,email);
                 }
+                Intent myIntent = new Intent(Sign_Up.this, Set_Password.class);
+                startActivity(myIntent);
             }
 
             private void add_to_database(String full_name, String phone_no, String email) {
                 userInfo.setUser_full_name(full_name);
                 userInfo.setUser_phone_no(phone_no);
                 userInfo.setUser_email(email);
+
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
