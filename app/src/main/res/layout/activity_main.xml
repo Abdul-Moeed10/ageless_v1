@@ -26,11 +26,11 @@
         android:id="@+id/reg_logo"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:scaleType="fitXY"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

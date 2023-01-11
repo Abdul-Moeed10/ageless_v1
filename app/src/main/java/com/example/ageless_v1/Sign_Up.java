@@ -56,6 +56,7 @@ public class Sign_Up extends AppCompatActivity {
                     add_to_database(full_name,phone_no,email);
                 }
                 Intent myIntent = new Intent(Sign_Up.this, Set_Password.class);
+                myIntent.putExtra("user_email", email);
                 startActivity(myIntent);
             }
 
