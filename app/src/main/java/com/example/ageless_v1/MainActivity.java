@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginUserAccount();
-            }
-        });
+//        login_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                loginUserAccount();
+//            }
+//        });
 
         Button signup = findViewById(R.id.sign_up_btn);
         signup.setOnClickListener(new View.OnClickListener() {

@@ -23,7 +23,7 @@ public class Sign_Up extends AppCompatActivity {
 
     private EditText user_full_name, user_email, user_phone_no;
     private Button proceed_button;
-
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,9 @@ public class Sign_Up extends AppCompatActivity {
 
         proceed_button = findViewById(R.id.proceed_button);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("UserInfo");
+        databaseReference = firebaseDatabase.getReference().child("UserInfo");
+        id = databaseReference.push().getKey();
+
 
         UserInfo userInfo = new UserInfo();
 
@@ -63,10 +65,11 @@ public class Sign_Up extends AppCompatActivity {
                 userInfo.setUser_email(email);
 
 
+
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        databaseReference.setValue(userInfo);
+                        databaseReference.child(phone_no).setValue(userInfo);
                         Toast.makeText(Sign_Up.this, "Data Added", Toast.LENGTH_SHORT).show();
                     }
 
