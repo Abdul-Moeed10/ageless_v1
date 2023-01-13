@@ -35,14 +35,14 @@ public class Profile_Setup extends AppCompatActivity {
                     .commit();
         }
         progressBar.setProgress(CurrentProgress);
-        next_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CurrentProgress = CurrentProgress + 10;
-                progressBar.setProgress(CurrentProgress);
-                progressBar.setMax(50);
-            }
-        });
+//        next_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                CurrentProgress = CurrentProgress + 10;
+//                progressBar.setProgress(CurrentProgress);
+//                progressBar.setMax(50);
+//            }
+//        });
 
 
 

@@ -20,14 +20,14 @@
             android:name=".Sign_Up"
             android:exported="false"/>
         <activity
-            android:name=".Set_Password"
+            android:name=".Set_Username"
             android:exported="false"/>
         <activity
             android:name=".Profile_Setup"
             android:exported="false"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
