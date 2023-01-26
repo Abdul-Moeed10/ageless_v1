@@ -55,49 +55,36 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 
-    <TextView
-        android:id="@android:id/text1"
-        style="?attr/spinnerDropDownItemStyle"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/dropdownListPreferredItemHeight"
-        android:background="@drawable/abc_spinner_mtrl_am_alpha"
-        android:backgroundTint="@color/material_dynamic_neutral80"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="562dp" />
-
-    <TextView
-        android:id="@android:id/text1"
-        style="?attr/spinnerDropDownItemStyle"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/dropdownListPreferredItemHeight"
-        android:background="@color/material_dynamic_primary50"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textColor="#FFF"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="446dp" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        style="@style/Widget.AppCompat.Spinner"
-        android:layout_width="300dp"
-        android:layout_height="?attr/dropdownListPreferredItemHeight"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="648dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/spinner_bg"
-        android:dropDownWidth="300dp"
-        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-        android:paddingRight="14dp"
-        android:popupBackground="@android:color/white"
-        android:popupElevation="3dp"
-        android:stateListAnimator="@drawable/spinner_sla"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.663"
+    <DatePicker
+        android:id="@+id/datePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:datePickerMode="spinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button1" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePicker1"
+        android:layout_marginTop="52dp"
+        android:text="Get Date"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:layout_editor_absoluteX="161dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/datePicker1" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

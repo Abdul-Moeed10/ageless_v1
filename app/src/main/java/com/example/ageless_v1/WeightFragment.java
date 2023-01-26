@@ -4,22 +4,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-
-import android.support.v8.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DateOfBirth#newInstance} factory method to
+ * Use the {@link WeightFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DateOfBirth<adapter> extends Fragment {
+public class WeightFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,19 +24,25 @@ public class DateOfBirth<adapter> extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    DatePicker picker;
-    Button btnGet;
-    TextView tvw;
+    public WeightFragment() {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//    }
-    public DateOfBirth()  {
+
+
         // Required empty public constructor
+    }
+    class MyAdapter(private val data: List<String>) : RecyclerView.Adapter<MyViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+            return MyViewHolder(view)
+        }
 
+        override fun getItemCount(): Int {
+            return data.size
+        }
+
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+            holder.bind(data[position])
+        }
     }
 
     /**
@@ -51,11 +51,11 @@ public class DateOfBirth<adapter> extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DateOfBirth.
+     * @return A new instance of fragment WeightFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DateOfBirth newInstance(String param1, String param2) {
-        DateOfBirth fragment = new DateOfBirth();
+    public static WeightFragment newInstance(String param1, String param2) {
+        WeightFragment fragment = new WeightFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,22 +70,12 @@ public class DateOfBirth<adapter> extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        tvw=(TextView)findViewById(R.id.textView1);
-        picker=(DatePicker)findViewById(R.id.datePicker1);
-        btnGet=(Button)findViewById(R.id.button1);
-        btnGet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvw.setText("Selected Date: "+ picker.getDayOfMonth()+"/"+ (picker.getMonth() + 1)+"/"+picker.getYear());
-            }
-        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_date_of_birth, container, false);
-
+        return inflater.inflate(R.layout.fragment_weight, container, false);
     }
 }
