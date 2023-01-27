@@ -10,12 +10,15 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 
 public class Account_Type_Fragment extends Fragment {
 
     CardView userbox;
     CardView contactbox;
+    ProgressBar progressBar;
+    int CurrentProgress;
 
     DateOfBirth dateOfBirth = new DateOfBirth();
 
@@ -36,6 +39,8 @@ public class Account_Type_Fragment extends Fragment {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_account_type, container, false);
         userbox = viewGroup.findViewById(R.id.userbox);
         contactbox = viewGroup.findViewById(R.id.contactbox);
+        progressBar = getActivity().findViewById(R.id.progressBar);
+        CurrentProgress = getArguments().getInt("current_progress");
         userbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +49,9 @@ public class Account_Type_Fragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container_view, fragment)
                         .commit();
+                CurrentProgress = CurrentProgress + 10;
+                progressBar.setProgress(CurrentProgress);
+
             }
         });
         return viewGroup;

@@ -55,36 +55,59 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 
-    <DatePicker
-        android:id="@+id/datePicker1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:datePickerMode="spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
+<!--    <DatePicker-->
+<!--        android:id="@+id/datePicker1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="#222566"-->
+<!--        android:calendarViewShown="false"-->
+<!--        android:datePickerMode="spinner"-->
+<!--        android:onClick="showDatePickerDialog"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.496"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView1" />-->
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/datePicker1"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="44dp"
         android:text="Get Date"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        tools:layout_editor_absoluteX="161dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button1"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/datePicker1" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <Button
+        android:id="@+id/proceed_button"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/registration_button"
+        android:fontFamily="@font/inter"
+        android:text="Proceed"
+        android:textAllCaps="false"
+        android:textColor="#f7f9fb"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

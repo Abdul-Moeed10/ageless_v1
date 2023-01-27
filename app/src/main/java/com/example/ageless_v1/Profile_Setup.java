@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,6 +20,10 @@ public class Profile_Setup extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button next_button;
 
+    private Account_Type_Fragment account_type_fragment = new Account_Type_Fragment();
+    private DateOfBirth dateOfBirth = new DateOfBirth();
+    private Gender_Fragment gender_fragment = new Gender_Fragment();
+
 
 
     @Override
@@ -28,6 +33,7 @@ public class Profile_Setup extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
 
         progressBar = findViewById(R.id.progressBar);
 //        next_button = findViewById(R.id.next_button);
@@ -44,6 +50,9 @@ public class Profile_Setup extends AppCompatActivity {
                         .commit();
 
         progressBar.setProgress(CurrentProgress);
+        Bundle bundle = new Bundle();
+        bundle.putInt("current_progress", CurrentProgress);
+        account_type_fragment.setArguments(bundle);
 //        next_button.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
