@@ -73,14 +73,7 @@ public class DateOfBirth<adapter> extends Fragment implements DatePickerDialog.O
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        btnGet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                com.example.ageless_v1.DatePicker_Fragment mDatePickerDialogFragment;
-                mDatePickerDialogFragment = new com.example.ageless_v1.DatePicker_Fragment();
-                mDatePickerDialogFragment.show(getChildFragmentManager(), "DATE PICK");
-            }
-        });
+
     }
 
     @Override
@@ -91,7 +84,16 @@ public class DateOfBirth<adapter> extends Fragment implements DatePickerDialog.O
         tvDate = viewGroup.findViewById(R.id.textView1);
         picker = viewGroup.findViewById(R.id.datePicker1);
         btnGet = viewGroup.findViewById(R.id.button1);
+        btnGet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                com.example.ageless_v1.DatePicker_Fragment mDatePickerDialogFragment;
+                mDatePickerDialogFragment = new com.example.ageless_v1.DatePicker_Fragment();
+                mDatePickerDialogFragment.show(getChildFragmentManager(), "DATE PICK");
+            }
+        });
         return viewGroup;
+
 
     }
 

@@ -30,14 +30,18 @@ public class Profile_Setup extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         progressBar = findViewById(R.id.progressBar);
-        next_button = findViewById(R.id.next_button);
+//        next_button = findViewById(R.id.next_button);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, Account_Type_Fragment.class, null)
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .setReorderingAllowed(true)
+//                    .add(R.id.fragment_container_view, Account_Type_Fragment.class, null)
+//                    .commit();
+//        }
+
+        Account_Type_Fragment account_type_fragment = new Account_Type_Fragment();
+        fragmentTransaction.replace(R.id.fragment_container_view, account_type_fragment)
+                        .commit();
 
         progressBar.setProgress(CurrentProgress);
 //        next_button.setOnClickListener(new View.OnClickListener() {

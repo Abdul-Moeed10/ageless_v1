@@ -27,9 +27,20 @@
 <!--        app:layout_constraintTop_toBottomOf="parent" />-->
 
     <!-- res/layout/example_activity.xml -->
-    <androidx.fragment.app.FragmentContainerView
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/fragment_container_view"-->
+<!--        android:name="com.example.ageless_v1.Account_Type_Fragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="56dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/progressBar"-->
+<!--        tools:layout="@layout/fragment_account_type" />-->
+
+    <FrameLayout
         android:id="@+id/fragment_container_view"
-        android:name="com.example.ageless_v1.Account_Type_Fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
@@ -37,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        tools:layout="@layout/fragment_account_type" />
+     />
 
 <!--    <androidx.fragment.app.FragmentContainerView-->
 <!--        android:layout_width="match_parent"-->

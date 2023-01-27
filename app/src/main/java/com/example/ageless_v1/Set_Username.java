@@ -79,6 +79,8 @@ public class Set_Username extends AppCompatActivity {
                 }
                 else{
                     add_to_database(fullname, username);
+                    Intent intent = new Intent(Set_Username.this, Profile_Setup.class);
+                    startActivity(intent);
                 }
 
             }

@@ -55,8 +55,8 @@ public class Sign_Up extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 add_to_database();
-//                Intent myIntent = new Intent(Sign_Up.this, Set_Username.class);
-//                startActivity(myIntent);
+                Intent myIntent = new Intent(Sign_Up.this, Set_Username.class);
+                startActivity(myIntent);
             }
 
             private void add_to_database() {
