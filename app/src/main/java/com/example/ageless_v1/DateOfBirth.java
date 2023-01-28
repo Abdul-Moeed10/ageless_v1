@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,9 @@ public class DateOfBirth extends Fragment {
     int day;
     Calendar calendar;
 
+    ProgressBar progressBar;
+    int CurrentProgress;
+
 
     public DateOfBirth()  {
         // Required empty public constructor
@@ -48,6 +52,8 @@ public class DateOfBirth extends Fragment {
         tvw = viewGroup.findViewById(R.id.textView1);
         btnGet = viewGroup.findViewById(R.id.button1);
         proceed_button = viewGroup.findViewById(R.id.proceed_button);
+        progressBar = getActivity().findViewById(R.id.progressBar);
+        CurrentProgress = 30;
 
 
         btnGet.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +82,7 @@ public class DateOfBirth extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container_view, fragment)
                         .commit();
+                progressBar.setProgress(CurrentProgress);
             }
         });
         return viewGroup;

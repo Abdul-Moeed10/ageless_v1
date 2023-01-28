@@ -20,6 +20,7 @@ public class Account_Type_Fragment extends Fragment {
     ProgressBar progressBar;
     int CurrentProgress;
 
+
     DateOfBirth dateOfBirth = new DateOfBirth();
 
     public Account_Type_Fragment() {
@@ -35,12 +36,11 @@ public class Account_Type_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_account_type, container, false);
         userbox = viewGroup.findViewById(R.id.userbox);
         contactbox = viewGroup.findViewById(R.id.contactbox);
         progressBar = getActivity().findViewById(R.id.progressBar);
-        CurrentProgress = getArguments().getInt("current_progress");
+        CurrentProgress = 20;
         userbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,9 +49,7 @@ public class Account_Type_Fragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container_view, fragment)
                         .commit();
-                CurrentProgress = CurrentProgress + 10;
                 progressBar.setProgress(CurrentProgress);
-
             }
         });
         return viewGroup;
