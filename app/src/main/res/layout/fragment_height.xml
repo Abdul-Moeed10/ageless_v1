@@ -54,69 +54,91 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+<!--    <Button-->
+<!--        android:id="@+id/standard_button"-->
+<!--        android:layout_width="@dimen/_70sdp"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:background="@drawable/registration_button"-->
+<!--        android:fontFamily="@font/inter"-->
+<!--        android:text="standard"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="#f7f9fb"-->
+<!--        android:textSize="@dimen/_14sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.3"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/metric_button"-->
+<!--        android:layout_width="@dimen/_70sdp"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:background="@drawable/registration_button"-->
+<!--        android:fontFamily="@font/inter"-->
+<!--        android:text="metric"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="#f7f9fb"-->
+<!--        android:textSize="@dimen/_14sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.668"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/ft"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/registration_email_background"
+            android:ems="10"
+            android:hint="Ft"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/black"
+            android:textColorHint="#95a5a6" />
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="0dp" />
+
+        <EditText
+            android:id="@+id/inch"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/registration_email_background"
+            android:ems="10"
+            android:hint="inch"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/black"
+            android:textColorHint="#95a5a6" />
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/lbs_button"
-        android:layout_width="@dimen/_70sdp"
+        android:id="@+id/proceed_button"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/registration_button"
         android:fontFamily="@font/inter"
-        android:text="standard"
+        android:text="Proceed"
         android:textAllCaps="false"
         android:textColor="#f7f9fb"
         android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/linear" />
 
-    <Button
-        android:id="@+id/kg_button"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/registration_button"
-        android:fontFamily="@font/inter"
-        android:text="metric"
-        android:textAllCaps="false"
-        android:textColor="#f7f9fb"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.668"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <EditText
-        android:id="@+id/user_weight1"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/registration_email_background"
-        android:ems="10"
-        android:hint="Ft"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/_15sdp"
-        android:textColor="@color/black"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.241"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbs_button" />
-
-    <EditText
-        android:id="@+id/user_weight2"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/registration_email_background"
-        android:ems="10"
-        android:hint="inch"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/_15sdp"
-        android:textColor="@color/black"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.761"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbs_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ public class UserInfo {
     private String user_phone_no;
     private String user_password;
     private String confirm_password;
+    private String account_type;
 
     public UserInfo(){
 
@@ -29,6 +30,9 @@ public class UserInfo {
     public String getConfirm_password(){
         return confirm_password;}
 
+    public String getAccount_type(){
+        return account_type;}
+
     public void setUser_full_name(String user_full_name){
         this.user_full_name=user_full_name;
     }
@@ -42,7 +46,8 @@ public class UserInfo {
     public void setUser_password(String user_password){
         this.user_password=user_password;
     }
-    public void setConfirm_password(String confirm_password){
-        this.confirm_password=confirm_password;
+    public void setConfirm_password(String confirm_password){ this.confirm_password=confirm_password; }
+    public void setAccount_type(String account_type){
+        this.account_type=account_type;
     }
 }

@@ -24,7 +24,6 @@ public class Profile_Setup extends AppCompatActivity {
     private DateOfBirth dateOfBirth = new DateOfBirth();
     private Gender_Fragment gender_fragment = new Gender_Fragment();
 
-    Bundle bundle = new Bundle();
 
 
 
@@ -51,9 +50,6 @@ public class Profile_Setup extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container_view, account_type_fragment)
                         .commit();
 
-        progressBar.setProgress(CurrentProgress);
-        bundle.putInt("current_progress", CurrentProgress);
-        account_type_fragment.setArguments(bundle);
 
 //        next_button.setOnClickListener(new View.OnClickListener() {
 //            @Override
