@@ -49,64 +49,144 @@
         android:layout_marginTop="16dp"
         android:text="To give you a better experience we need to know your weight"
         android:textColor="#222566"
-        android:textSize="12sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <Button
-        android:id="@+id/lbs_button"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/registration_button"
-        android:fontFamily="@font/inter"
-        android:text="lbs"
-        android:textAllCaps="false"
-        android:textColor="#f7f9fb"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.262"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+<!--    <Button-->
+<!--        android:id="@+id/lbs_button"-->
+<!--        android:layout_width="@dimen/_70sdp"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:background="@drawable/registration_button"-->
+<!--        android:fontFamily="@font/inter"-->
+<!--        android:text="lbs"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="#f7f9fb"-->
+<!--        android:textSize="@dimen/_14sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.262"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
 
-    <Button
-        android:id="@+id/kg_button"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/registration_button"
-        android:fontFamily="@font/inter"
-        android:text="kgs"
-        android:textAllCaps="false"
-        android:textColor="#f7f9fb"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.693"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+<!--    <Button-->
+<!--        android:id="@+id/kg_button"-->
+<!--        android:layout_width="@dimen/_70sdp"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:background="@drawable/registration_button"-->
+<!--        android:fontFamily="@font/inter"-->
+<!--        android:text="kgs"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="#f7f9fb"-->
+<!--        android:textSize="@dimen/_14sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.693"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
 
-    <EditText
-        android:id="@+id/weight"
-        android:layout_width="@dimen/_270sdp"
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linear"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="68dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView9"-->
+<!--        tools:layout_editor_absoluteX="0dp">-->
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/kg"-->
+<!--            android:layout_width="@dimen/_100sdp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:textSize="@dimen/_12sdp"-->
+<!--            android:text="Kgs"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textColorHint="#000000"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
+
+<!--        <View-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="0dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/lbs"-->
+<!--            android:layout_width="@dimen/_100sdp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:text="Lbs"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="@dimen/_12sdp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textColorHint="#000000"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/kg_weight" />-->
+
+
+<!--    </LinearLayout>-->
+
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/registration_email_background"
-        android:ems="10"
-        android:hint="Weight"
-        android:inputType="number"
-        android:padding="@dimen/_15sdp"
-        android:textColor="@color/black"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbs_button" />
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <EditText
+            android:id="@+id/kg_weight"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/registration_email_background"
+            android:ems="10"
+            android:hint="Weight (kgs)"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/black"
+            android:textColorHint="#95a5a6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <!--        <View-->
+        <!--            android:layout_width="5dp"-->
+        <!--            android:layout_height="0dp" />-->
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/lbsweight"-->
+        <!--            android:layout_width="@dimen/_120sdp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/registration_email_background"-->
+        <!--            android:ems="10"-->
+        <!--            android:hint="Weight (lbs)"-->
+        <!--            android:inputType="numberDecimal"-->
+        <!--            android:padding="@dimen/_15sdp"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textColorHint="#95a5a6"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/kg_weight" />-->
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/proceed_button"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/registration_button"
         android:fontFamily="@font/inter"
         android:text="Proceed"
@@ -114,8 +194,8 @@
         android:textColor="#f7f9fb"
         android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weight" />
+        app:layout_constraintTop_toBottomOf="@+id/linear2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,8 +55,6 @@ public class Sign_Up extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 add_to_database();
-                Intent myIntent = new Intent(Sign_Up.this, Set_Username.class);
-                startActivity(myIntent);
             }
 
             private void add_to_database() {
@@ -84,6 +82,8 @@ public class Sign_Up extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(Sign_Up.this, "Registration successful, verification email sent.", Toast.LENGTH_SHORT).show();
+                                                Intent myIntent = new Intent(Sign_Up.this, Set_Username.class);
+                                                startActivity(myIntent);
                                             }
                                             else{
                                                 Toast.makeText(Sign_Up.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
