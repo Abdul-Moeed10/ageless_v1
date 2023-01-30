@@ -1,5 +1,9 @@
 package com.example.ageless_v1;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,13 +19,18 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 
 public class Account_Type_Fragment extends Fragment {
@@ -32,33 +41,15 @@ public class Account_Type_Fragment extends Fragment {
     int CurrentProgress;
 
 
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String uid;
-    private UserInfo userInfo = new UserInfo();
+//    private FirebaseDatabase firebaseDatabase;
+//    private DatabaseReference databaseReference;
+//    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//    private String uid;
+//    private UserInfo userInfo = new UserInfo();
+
+    SharedPreferences sharedPreferences;
 
 
-
-
-    DateOfBirth dateOfBirth = new DateOfBirth();
-
-    private void add_to_database(String account_type){
-        userInfo.setAccount_type(account_type);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.setValue(userInfo);
-//                Toast.makeText(getActivity(), "User set", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(getActivity(), "User not set. Try again.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public Account_Type_Fragment() {
         // Required empty public constructor
@@ -78,25 +69,31 @@ public class Account_Type_Fragment extends Fragment {
         progressBar = getActivity().findViewById(R.id.progressBar);
         CurrentProgress = 20;
 
-        FirebaseAuth firebaseAuth;
+//        FirebaseAuth firebaseAuth;
+//
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        uid = user.getUid();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        uid = user.getUid();
-        databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
+        sharedPreferences  = this.getActivity().getSharedPreferences("Ageless", MODE_PRIVATE);
+        SharedPreferences.Editor add_data = sharedPreferences.edit();
 
 
-            userbox.setOnClickListener(new View.OnClickListener() {
+
+        userbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String user_type = "Primary User";
-                    add_to_database(user_type);
-//                    Fragment fragment = new DateOfBirth();
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.fragment_container_view, fragment)
-//                            .commit();
-//                    progressBar.setProgress(CurrentProgress);
+                    add_data.putString("account_type", user_type);
+                    add_data.apply();
+
+                    Fragment fragment = new DateOfBirth();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container_view, fragment)
+                            .commit();
+                    progressBar.setProgress(CurrentProgress);
+
                 }
 
 
@@ -105,5 +102,20 @@ public class Account_Type_Fragment extends Fragment {
 
         return viewGroup;
     }
+
+//    private void update_data(String account_type){
+//        databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
+//        databaseReference.setValue(account_type).addOnCompleteListener(new OnCompleteListener() {
+//            @Override
+//            public void onComplete(@NonNull Task task) {
+//                if(task.isSuccessful()){
+//                    Toast.makeText(getActivity(), "Account type set", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    Toast.makeText(getActivity(), "Account type not set", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 
 }

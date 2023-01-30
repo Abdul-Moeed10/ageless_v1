@@ -1,5 +1,8 @@
 package com.example.ageless_v1;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -21,6 +24,8 @@ public class Gender_Fragment extends Fragment {
     CardView malebox;
     CardView femalebox;
 
+    SharedPreferences sharedPreferences;
+
     public Gender_Fragment() {
         // Required empty public constructor
     }
@@ -36,9 +41,15 @@ public class Gender_Fragment extends Fragment {
         femalebox = viewGroup.findViewById(R.id.femalebox);
         CurrentProgress = 40;
 
+        sharedPreferences  = this.getActivity().getSharedPreferences("Ageless", MODE_PRIVATE);
+        SharedPreferences.Editor add_data = sharedPreferences.edit();
+
         malebox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String gender = "male";
+                add_data.putString("gender", gender);
+                add_data.apply();
                 Fragment fragment = new weight();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -50,6 +61,9 @@ public class Gender_Fragment extends Fragment {
         femalebox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String gender = "female";
+                add_data.putString("gender", gender);
+                add_data.apply();
                 Fragment fragment = new weight();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

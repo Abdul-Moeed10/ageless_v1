@@ -76,6 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/A_plus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -105,6 +106,7 @@
     android:layout_height="0dp"
     android:layout_weight="1"></View>
         <androidx.cardview.widget.CardView
+            android:id="@+id/A_minus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -141,6 +143,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/AB_plus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -170,6 +173,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"></View>
         <androidx.cardview.widget.CardView
+            android:id="@+id/AB_minus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -207,6 +211,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/B_plus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -238,6 +243,7 @@
             android:layout_weight="1"></View>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/B_minus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -275,6 +281,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/O_plus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
@@ -306,6 +313,7 @@
             android:layout_weight="1"></View>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/O_minus"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"

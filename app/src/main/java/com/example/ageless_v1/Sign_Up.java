@@ -49,7 +49,7 @@ public class Sign_Up extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        UserInfo userInfo = new UserInfo();
+//        UserInfo userInfo = new UserInfo();
 
         proceed_button.setOnClickListener(new View.OnClickListener() {
             @Override

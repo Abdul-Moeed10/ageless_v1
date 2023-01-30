@@ -89,4 +89,20 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/proceed_button"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/registration_button"
+        android:fontFamily="@font/inter"
+        android:text="Proceed"
+        android:textAllCaps="false"
+        android:textColor="#f7f9fb"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

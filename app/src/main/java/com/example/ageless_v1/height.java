@@ -1,5 +1,8 @@
 package com.example.ageless_v1;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,7 +25,7 @@ public class height extends Fragment {
 
     EditText ft, inch;
 
-
+    SharedPreferences sharedPreferences;
 
     public height() {
         // Required empty public constructor
@@ -42,9 +45,18 @@ public class height extends Fragment {
         inch = viewGroup.findViewById(R.id.inch);
 
 
+        sharedPreferences  = this.getActivity().getSharedPreferences("Ageless", MODE_PRIVATE);
+        SharedPreferences.Editor add_data = sharedPreferences.edit();
+
         proceed_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String feet = ft.getText().toString();
+                String inches = inch.getText().toString();
+                add_data.putString("feet", feet);
+                add_data.putString("inches", inches);
+                add_data.apply();
+
                 String temp1 = ft.getText().toString();
                 String temp2 = inch.getText().toString();
                 if(!"".equals(temp1) && !"".equals(temp2)) {

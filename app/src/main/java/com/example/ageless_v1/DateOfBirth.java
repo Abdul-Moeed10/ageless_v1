@@ -1,7 +1,10 @@
 package com.example.ageless_v1;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +26,6 @@ import java.util.Calendar;
 
 public class DateOfBirth extends Fragment {
 
-    DatePicker picker;
     Button proceed_button;
 
     Button btnGet;
@@ -37,6 +39,8 @@ public class DateOfBirth extends Fragment {
     ProgressBar progressBar;
     int CurrentProgress;
 
+    SharedPreferences sharedPreferences;
+
 
     public DateOfBirth()  {
         // Required empty public constructor
@@ -49,11 +53,14 @@ public class DateOfBirth extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_date_of_birth, container, false);
-        tvw = viewGroup.findViewById(R.id.textView1);
+        tvw = viewGroup.findViewById(R.id.dob);
         btnGet = viewGroup.findViewById(R.id.button1);
         proceed_button = viewGroup.findViewById(R.id.proceed_button);
         progressBar = getActivity().findViewById(R.id.progressBar);
         CurrentProgress = 30;
+
+        sharedPreferences  = this.getActivity().getSharedPreferences("Ageless", MODE_PRIVATE);
+        SharedPreferences.Editor add_data = sharedPreferences.edit();
 
 
         btnGet.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +78,9 @@ public class DateOfBirth extends Fragment {
                             }
                         }, year, month, day);
                 datePickerDialog.show();
+                String dob = tvw.getText().toString();
+                add_data.putString("dob", dob);
+                add_data.apply();
             }
         });
 
@@ -88,9 +98,5 @@ public class DateOfBirth extends Fragment {
         return viewGroup;
 
     }
-
-
-
-
 
 }
