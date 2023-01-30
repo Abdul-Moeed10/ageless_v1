@@ -32,19 +32,18 @@ public class Account_Type_Fragment extends Fragment {
     int CurrentProgress;
 
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid;
-    UserInfo userInfo = new UserInfo();
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid;
+    private UserInfo userInfo = new UserInfo();
 
 
-    String user_type;
-    String account_type;
+
 
     DateOfBirth dateOfBirth = new DateOfBirth();
 
-    private void add_to_database(){
+    private void add_to_database(String account_type){
         userInfo.setAccount_type(account_type);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -87,13 +86,11 @@ public class Account_Type_Fragment extends Fragment {
         databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
 
 
-
-        try {
             userbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    account_type = "Primary User";
-                    add_to_database();
+                    String user_type = "Primary User";
+                    add_to_database(user_type);
 //                    Fragment fragment = new DateOfBirth();
 //                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -104,10 +101,7 @@ public class Account_Type_Fragment extends Fragment {
 
 
             });
-        }
-        catch (Exception e){
-            Log.e("Getdata", e.getMessage(), e);
-        }
+
 
         return viewGroup;
     }

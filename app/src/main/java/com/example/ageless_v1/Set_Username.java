@@ -27,12 +27,12 @@ public class Set_Username extends AppCompatActivity {
     private EditText user_fullname;
     private EditText user_username;
 
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid;
-    UserInfo userInfo = new UserInfo();
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid;
+    private UserInfo userInfo = new UserInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class Set_Username extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
 
         user_fullname=findViewById(R.id.user_fullname);
-        user_username=findViewById(R.id.user_username);
+        user_username=findViewById(R.id.etPhoneNumber);
 
 
 

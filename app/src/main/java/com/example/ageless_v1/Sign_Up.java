@@ -30,8 +30,8 @@ public class Sign_Up extends AppCompatActivity {
     private EditText user_password, user_email, user_confirm_password;
     private Button proceed_button;
     private String id;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
