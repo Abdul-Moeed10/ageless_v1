@@ -12,6 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class Profile_Setup extends AppCompatActivity {
 
@@ -24,6 +29,13 @@ public class Profile_Setup extends AppCompatActivity {
     private DateOfBirth dateOfBirth = new DateOfBirth();
     private Gender_Fragment gender_fragment = new Gender_Fragment();
 
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid;
+    private UserInfo userInfo = new UserInfo();
+    FirebaseAuth firebaseAuth;
+
 
 
 
@@ -34,6 +46,11 @@ public class Profile_Setup extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        uid = user.getUid();
+        databaseReference = firebaseDatabase.getReference(uid);
 
 
         progressBar = findViewById(R.id.progressBar);

@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Set_Username extends AppCompatActivity {
 
     private EditText user_fullname;
-    private EditText user_username;
+    private EditText user_phoneno;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -45,7 +45,7 @@ public class Set_Username extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
 
         user_fullname=findViewById(R.id.user_fullname);
-        user_username=findViewById(R.id.etPhoneNumber);
+        user_phoneno=findViewById(R.id.etPhoneNumber);
 
 
 
@@ -56,13 +56,13 @@ public class Set_Username extends AppCompatActivity {
                 //Uncomment this part later!!!!!!!
 
                 String fullname = user_fullname.getText().toString();
-                String username = user_username.getText().toString();
+                String phoneno = user_phoneno.getText().toString();
 
-                if(TextUtils.isEmpty(fullname) || TextUtils.isEmpty(username)){
+                if(TextUtils.isEmpty(fullname) || TextUtils.isEmpty(phoneno)){
                     Toast.makeText(Set_Username.this, "Please enter details", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    add_to_database(fullname, username);
+                    add_to_database(fullname, phoneno);
                     Intent intent = new Intent(Set_Username.this, Profile_Setup.class);
                     startActivity(intent);
                 }
@@ -72,9 +72,9 @@ public class Set_Username extends AppCompatActivity {
 
     //Uncomment this part later!!!!!!!
 
-    private void add_to_database(String fullname, String username){
+    private void add_to_database(String fullname, String user_phoneno){
         userInfo.setUser_full_name(fullname);
-        userInfo.setUser_username(username);
+        userInfo.setUser_phone_no(user_phoneno);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

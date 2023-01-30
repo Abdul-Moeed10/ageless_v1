@@ -37,6 +37,7 @@ public class Account_Type_Fragment extends Fragment {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String uid;
     private UserInfo userInfo = new UserInfo();
+    FirebaseAuth firebaseAuth;
 
 
 
@@ -78,12 +79,12 @@ public class Account_Type_Fragment extends Fragment {
         progressBar = getActivity().findViewById(R.id.progressBar);
         CurrentProgress = 20;
 
-        FirebaseAuth firebaseAuth;
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         uid = user.getUid();
-        databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
+        databaseReference = firebaseDatabase.getReference("User Info").child(uid);
 
 
             userbox.setOnClickListener(new View.OnClickListener() {
