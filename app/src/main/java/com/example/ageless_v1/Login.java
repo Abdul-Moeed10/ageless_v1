@@ -31,11 +31,11 @@ public class Login extends AppCompatActivity {
 
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String uid;
-    private UserInfo userInfo = new UserInfo();
+//    private FirebaseDatabase firebaseDatabase;
+//    private DatabaseReference databaseReference;
+//    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//    private String uid;
+//    private UserInfo userInfo = new UserInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +48,25 @@ public class Login extends AppCompatActivity {
         login_button = findViewById(R.id.login_button);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        uid = user.getUid();
-        databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+////        uid = user.getUid();
+//        databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Ageless", MODE_PRIVATE);
-
-        String fullname = sharedPreferences.getString("user_fullname", "");
-        String phoneno = sharedPreferences.getString("user_phoneno", "");
-        String account_type = sharedPreferences.getString("account_type", "");
-        String gender = sharedPreferences.getString("gender", "");
-        String weight = sharedPreferences.getString("weight", "");
-        String feet = sharedPreferences.getString("feet", "");
-        String inches = sharedPreferences.getString("inches", "");
-        String blood_group = sharedPreferences.getString("blood_group", "");
-        String emergency_no = sharedPreferences.getString("emergency_no", "");
-        String medical_info = sharedPreferences.getString("medical_info", "");
-
-        add_to_database(fullname, phoneno, account_type, gender, weight,
-                feet, inches, blood_group, emergency_no, medical_info);
+//        SharedPreferences sharedPreferences = getSharedPreferences("Ageless", MODE_PRIVATE);
+//
+//        String fullname = sharedPreferences.getString("user_fullname", "");
+//        String phoneno = sharedPreferences.getString("user_phoneno", "");
+//        String account_type = sharedPreferences.getString("account_type", "");
+//        String gender = sharedPreferences.getString("gender", "");
+//        String weight = sharedPreferences.getString("weight", "");
+//        String feet = sharedPreferences.getString("feet", "");
+//        String inches = sharedPreferences.getString("inches", "");
+//        String blood_group = sharedPreferences.getString("blood_group", "");
+//        String emergency_no = sharedPreferences.getString("emergency_no", "");
+//        String medical_info = sharedPreferences.getString("medical_info", "");
+//
+//        add_to_database(fullname, phoneno, account_type, gender, weight,
+//                feet, inches, blood_group, emergency_no, medical_info);
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +110,8 @@ public class Login extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         if(firebaseAuth.getCurrentUser().isEmailVerified()){
                                             Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
-//                                            Intent intent = new Intent(Login.this, Set_Username.class);
-//                                            startActivity(intent);
+                                            Intent intent = new Intent(Login.this, Dashboard.class);
+                                            startActivity(intent);
                                         }
                                         else{
                                             Toast.makeText(getApplicationContext(), "Login failed, please verify your email.", Toast.LENGTH_LONG).show();
@@ -126,33 +126,33 @@ public class Login extends AppCompatActivity {
         }
 
 
-    private void add_to_database(String fullname, String phoneno, String account_type, String gender,
-                                 String weight, String feet, String inches, String blood_group,
-                                 String emergency_no, String medical_info){
-
-        userInfo.setUser_full_name(fullname);
-        userInfo.setUser_phone_no(phoneno);
-        userInfo.setAccount_type(account_type);
-        userInfo.setGender(gender);
-        userInfo.setWeight(weight);
-        userInfo.setFeet(feet);
-        userInfo.setInches(inches);
-        userInfo.setBlood_group(blood_group);
-        userInfo.setEmergency_contact(emergency_no);
-        userInfo.setMedical_info(medical_info);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.setValue(userInfo);
-//                Toast.makeText(Login.this, "Data added. Please verify your email.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(Login.this, "Data not added. Try again.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void add_to_database(String fullname, String phoneno, String account_type, String gender,
+//                                 String weight, String feet, String inches, String blood_group,
+//                                 String emergency_no, String medical_info){
+//
+//        userInfo.setUser_full_name(fullname);
+//        userInfo.setUser_phone_no(phoneno);
+//        userInfo.setAccount_type(account_type);
+//        userInfo.setGender(gender);
+//        userInfo.setWeight(weight);
+//        userInfo.setFeet(feet);
+//        userInfo.setInches(inches);
+//        userInfo.setBlood_group(blood_group);
+//        userInfo.setEmergency_contact(emergency_no);
+//        userInfo.setMedical_info(medical_info);
+//
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                databaseReference.setValue(userInfo);
+////                Toast.makeText(Login.this, "Data added. Please verify your email.", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+////                Toast.makeText(Login.this, "Data not added. Try again.", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     }

@@ -66,7 +66,6 @@ public class Profile_Setup extends AppCompatActivity {
                         .commit();
 
         progressBar.setProgress(CurrentProgress);
-        progressBar.setMax(90);
 
     }
 
