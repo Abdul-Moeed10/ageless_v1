@@ -33,65 +33,101 @@
 
     <TextView
         android:id="@+id/otp_para"
-        android:layout_width="339dp"
-        android:layout_height="56dp"
+        android:layout_width="348dp"
+        android:layout_height="32dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/inter"
-        android:text="Please enter your email and mobile number and we will send you an OTP to verify."
+        android:text="Please enter your email and password."
         android:textColor="#484A4B"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_title" />
 
-
-
-    <EditText
-        android:id="@+id/user_full_name"
-        android:layout_width="@dimen/_270sdp"
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/registration_email_background"
-        android:ems="10"
-        android:hint="Full Name"
-        android:textColor="@color/black"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/_15sdp"
-        android:textColorHint="#000000"
+        android:layout_marginTop="308dp"
+        android:layout_marginEnd="320dp"
+        android:text="Email"
+        android:textColor="#3E3F61"
+        android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otp_para" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="292dp"
+        android:text="Password"
+        android:textColor="#3E3F61"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="496dp"
+        android:layout_marginEnd="240dp"
+        android:text="Confirm Password"
+        android:textColor="#3E3F61"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/user_email"
         android:layout_width="@dimen/_270sdp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/registration_email_background"
         android:ems="10"
-        android:textColor="@color/black"
-        android:hint="Email"
+        android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_full_name" />
+        app:layout_constraintTop_toBottomOf="@+id/otp_para" />
 
     <EditText
-        android:id="@+id/user_phone_no"
+        android:id="@+id/user_password"
         android:layout_width="@dimen/_270sdp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/registration_email_background"
         android:ems="10"
-        android:textColor="@color/black"
-        android:hint="Phone Number"
-        android:inputType="phone"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_email" />
+
+    <EditText
+        android:id="@+id/user_confirm_password"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/registration_email_background"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_password" />
 
     <Button
         android:id="@+id/proceed_button"
@@ -106,6 +142,6 @@
         android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_phone_no" />
+        app:layout_constraintTop_toBottomOf="@+id/user_confirm_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:fontFamily="@font/aladin"
+        android:text="3"
+        android:textColor="#222566"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/8"
+        android:textColor="#222566"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/aladin"
+        android:text="What's your gender?"
+        android:textColor="#222566"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="To give you a better experience we need to know your gender"
+        android:textColor="#222566"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/malebox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:background="#DEDEDE"
+        android:gravity="center_horizontal"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/femalebox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="140dp"
+            android:layout_height="204dp"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="364dp">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/aladin"
+                android:text="Male"
+                android:textAlignment="center"
+                android:textColor="#222566"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/male"
+                android:layout_width="96dp"
+                android:layout_height="95dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:src="@drawable/male"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/textView13"-->
+            <!--            android:layout_width="131dp"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_alignParentStart="true"-->
+            <!--            android:layout_alignParentLeft="true"-->
+            <!--            android:layout_alignParentEnd="true"-->
+            <!--            android:layout_alignParentRight="false"-->
+            <!--            android:layout_alignParentBottom="true"-->
+            <!--            android:layout_marginStart="51dp"-->
+            <!--            android:layout_marginLeft="51dp"-->
+            <!--            android:layout_marginEnd="132dp"-->
+            <!--            android:layout_marginBottom="27dp"-->
+            <!--            android:fontFamily="@font/inter"-->
+            <!--            android:text="Person to be taken care of"-->
+            <!--            android:textColor="#222566"-->
+            <!--            android:textSize="@dimen/_8sdp" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/femalebox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="80dp"
+        android:background="#DEDEDE"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/malebox"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="138dp"
+            android:layout_height="200dp">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/aladin"
+                android:text="Female"
+                android:textColor="#222566"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.507"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/user_logo"
+                android:layout_width="96dp"
+                android:layout_height="95dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:src="@drawable/female"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/textView11"-->
+            <!--            android:layout_width="131dp"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_alignParentStart="true"-->
+            <!--            android:layout_alignParentLeft="true"-->
+            <!--            android:layout_alignParentEnd="true"-->
+            <!--            android:layout_alignParentRight="false"-->
+            <!--            android:layout_alignParentBottom="true"-->
+            <!--            android:layout_marginStart="51dp"-->
+            <!--            android:layout_marginLeft="51dp"-->
+            <!--            android:layout_marginEnd="132dp"-->
+            <!--            android:layout_marginBottom="27dp"-->
+            <!--            android:fontFamily="@font/inter"-->
+            <!--            android:text="Person to be taken care of"-->
+            <!--            android:textColor="#222566"-->
+            <!--            android:textSize="@dimen/_8sdp" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

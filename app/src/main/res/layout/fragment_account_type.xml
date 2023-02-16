@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Account_Type_Fragment">
+    tools:context=".Account_Type_Fragment"
+    android:background="#ffffff">>
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -24,12 +25,13 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="22dp"
+        android:layout_height="23dp"
         android:text="/8"
+        android:textColor="#222566"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        tools:layout_editor_absoluteY="124dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView8"
@@ -49,12 +51,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColor="#222566"
         android:text="Choose the type of Account, please not that this is not changeable"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
 
 
     <androidx.cardview.widget.CardView
@@ -116,6 +118,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="51dp"
                 android:layout_marginLeft="51dp"
+                android:textColor="#222566"
                 android:layout_marginEnd="132dp"
                 android:layout_marginBottom="27dp"
                 android:fontFamily="@font/inter"
@@ -183,16 +186,19 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="false"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="47dp"
-                android:layout_marginLeft="47dp"
-                android:layout_marginEnd="136dp"
-                android:layout_marginBottom="28dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginEnd="135dp"
+                android:layout_marginBottom="23dp"
                 android:fontFamily="@font/inter"
-                android:text="Person to be taken care of"
+                android:text="Person to be contacted in case of emergency"
+                android:textColor="#222566"
                 android:textSize="@dimen/_8sdp" />
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
