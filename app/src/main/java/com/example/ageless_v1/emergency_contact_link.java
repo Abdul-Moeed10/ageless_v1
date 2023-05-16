@@ -2,10 +2,10 @@ package com.example.ageless_v1;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import androidx.fragment.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
