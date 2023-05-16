@@ -18,6 +18,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
+
 
 public class medical_info extends Fragment {
 
@@ -52,6 +57,7 @@ public class medical_info extends Fragment {
                 String medical_info = medical.getText().toString();
                 add_data.putString("medical_info", medical_info);
                 add_data.apply();
+
 
                 if(!"".equals(medical_info)){
 //                    Fragment fragment = new blood_group();
