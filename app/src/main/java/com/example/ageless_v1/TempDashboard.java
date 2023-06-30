@@ -48,8 +48,13 @@ public class TempDashboard extends AppCompatActivity {
         String emergency_no = sharedPreferences.getString("emergency_no", "");
         String medical_info = sharedPreferences.getString("medical_info", "");
 
-        add_to_database(fullname, phoneno, account_type, gender, weight,
-                feet, inches, blood_group, emergency_no, medical_info);
+
+        if(!fullname.isEmpty() && !phoneno.isEmpty() && !account_type.isEmpty() && !gender.isEmpty() && !weight.isEmpty() &&
+                !feet.isEmpty() && !inches.isEmpty() && !blood_group.isEmpty() && !emergency_no.isEmpty() &&
+                !medical_info.isEmpty()){
+            add_to_database(fullname, phoneno, account_type, gender, weight,
+                    feet, inches, blood_group, emergency_no, medical_info);
+        }
 
         Intent intent = new Intent(TempDashboard.this, Dashboard.class);
         startActivity(intent);

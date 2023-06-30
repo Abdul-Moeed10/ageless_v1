@@ -97,16 +97,16 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
     private DescriptiveStatistics gyroscopeDataZ;
 
     //URL FOR MY HOTSPOT
-    //private static final String URL = "http://172.20.10.2:3000/predict";
+    private static final String URL = "http://172.20.10.2:3000/predict";
 
     //URL FOR HOME WIFI
-    private static final String URL = "http://192.168.100.64:3000/predict";
+    //private static final String URL = "http://192.168.100.64:3000/predict";
 
     //URL FOR GAME LAB
     //private static final String URL = "http://192.168.0.140:3000/predict";
 
     //URL FOR SZABIST WIFI
-    //static final String URL = "http://172.16.171.208:3000/predict";
+    //static final String URL = "http://172.16.226.162:3000/predict";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +156,8 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             @Override
             public void onClick(View view) {
                 firebaseAuth.signOut();
-                Intent intent = new Intent(Dashboard.this, Login. class);
+                Intent intent = new Intent(Dashboard.this, Login.class);
+                startActivity(intent);
             }
         });
 
