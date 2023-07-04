@@ -1,20 +1,29 @@
 package com.example.ageless_v1;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,14 +42,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.moment.Kurtosis;
 import org.apache.commons.math3.stat.descriptive.moment.Skewness;
+import org.apache.commons.math3.transform.DftNormalization;
+import org.apache.commons.math3.transform.FastFourierTransformer;
+import org.apache.commons.math3.transform.TransformType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Dashboard extends AppCompatActivity implements SensorEventListener {
 
@@ -53,16 +68,21 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
 
     private Button sign_out;
 
+    private TextView phone_no, user_name, sample3;
+
+    LinearLayout ambulance, emergency_contact, pills, steps, to_do, settings;
+
+
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor gyroscope;
     private float[] accelerometerReading = new float[3];
     private float[] gyroscopeReading = new float[3];
-    private TextView textView;
     private RequestQueue queue;
     private static final String TAG = "MainActivity";
-    private static final long TIMER_DELAY = 6000; // Delay of 6 seconds
-    private JSONObject jsonBody;
+
+    private String ambulance_no, emergency_no;
+
 
     private double accMax = 0;
     private float gyroMax = 0;
@@ -96,17 +116,39 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
     private DescriptiveStatistics gyroscopeDataY;
     private DescriptiveStatistics gyroscopeDataZ;
 
+    private double Ax;
+    private double Ay;
+    private double Az;
+    private double Gx;
+    private double Gy;
+    private double Gz;
+
+    private double AX, AY, AZ, GX, GY, GZ;
+
+    private boolean isAlertShowing = false;
+
+
+    private static final int NO_ACTIVITY_THRESHOLD = 60; // in seconds
+    private long noActivityStartTime = 0;
+
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    private static final int REQUEST_CALL_PHONE = 2;
+
     //URL FOR MY HOTSPOT
-    private static final String URL = "http://172.20.10.2:3000/predict";
+    //private static final String URL = "http://172.20.10.2:3000/fall_predict";
+    //private static final String URL = "http://172.20.10.2:3000/activity_predict";
 
     //URL FOR HOME WIFI
-    //private static final String URL = "http://192.168.100.64:3000/predict";
+    private static final String URL = "http://192.168.100.64:3000/fall_predict";
+    private static final String URL2 = "http://192.168.100.64:3000/activity_predict";
 
     //URL FOR GAME LAB
-    //private static final String URL = "http://192.168.0.140:3000/predict";
+    //private static final String URL = "http://192.168.0.140:3000/fall_predict";
+    //private static final String URL = "http://192.168.0.140:3000/activity_predict";
 
     //URL FOR SZABIST WIFI
-    //static final String URL = "http://172.16.226.162:3000/predict";
+    //static final String URL = "http://172.16.226.162:3000/fall_predict";
+    //static final String URL = "http://172.16.226.162:3000/activity_predict";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +160,49 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
         uid = user.getUid();
         databaseReference = firebaseDatabase.getReference("UserInfo").child(uid);
 
-        sign_out = findViewById(R.id.sign_out);
+        ambulance = findViewById(R.id.ambulance);
+        emergency_contact = findViewById(R.id.emergency_contact);
+        pills = findViewById(R.id.pills);
+        steps = findViewById(R.id.steps);
+        to_do = findViewById(R.id.to_do);
+        settings = findViewById(R.id.settings);
+
+        user_name = findViewById(R.id.user_name);
+        //sample3 = findViewById(R.id.sample3);
+        //sign_out = findViewById(R.id.sign_out);
+
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+        } else {
+            // Permission has already been granted
+            // ...
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PHONE);
+        } else {
+            // Permission already granted
+        }
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("user_full_name").getValue(String.class);
+                emergency_no = dataSnapshot.child("user_phone_no").getValue(String.class);
+                //String account = dataSnapshot.child("account_type").getValue(String.class);
+//                sample.setText(name);
+                user_name.setText(name);
+                //phone_no = emergency_no;
+                //sample3.setText(account);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // handle error
+            }
+        });
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("Ageless", MODE_PRIVATE);
 
@@ -147,21 +231,103 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        textView = findViewById(R.id.result);
+        //textView = findViewById(R.id.result);
         queue = Volley.newRequestQueue(this);
 
         startSensorUpdates();
 
-        sign_out.setOnClickListener(new View.OnClickListener() {
+//        sign_out.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                firebaseAuth.signOut();
+//                Intent intent = new Intent(Dashboard.this, Login.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        ambulance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firebaseAuth.signOut();
-                Intent intent = new Intent(Dashboard.this, Login.class);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
+                builder.setMessage("Do you want to call an ambulance?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(Dashboard.this, "Calling Ambulance", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(Dashboard.this, "Not Calling Ambulance", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.setCancelable(false);
+                final AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+        emergency_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
+                builder.setMessage("Do you want to call your emergency contact??")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String phoneNumber = emergency_no;
+                                Toast.makeText(Dashboard.this, "Calling Emergency Contact", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Intent.ACTION_CALL);
+                                intent.setData(Uri.parse("tel:" + phoneNumber));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(Dashboard.this, "Not Calling Emergency Contact", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.setCancelable(false);
+                final AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+        pills.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, Pills.class);
                 startActivity(intent);
             }
         });
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission was granted
+                    // ...
+                } else {
+                    // Permission denied
+                    // ...
+                }
+                return;
+            }
+
+            case REQUEST_CALL_PHONE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission was granted
+                    // ...
+                } else {
+                    // Permission denied
+                    // ...
+                }
+            }
+        }
+    }
+
 
     private void startSensorUpdates() {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -174,7 +340,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                 sendSensorData();
                 startSensorUpdates();
             }
-        }, 6000);
+        }, 3000);
     }
 
     private void stopSensorUpdates() {
@@ -192,6 +358,14 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             accelerometerDataX.addValue(accelerometerReading[0]);
             accelerometerDataY.addValue(accelerometerReading[1]);
             accelerometerDataZ.addValue(accelerometerReading[2]);
+
+            Ax = accelerometerReading[0];
+            Ay = accelerometerReading[1];
+            Az = accelerometerReading[2];
+
+            AX = calculateDFT(Ax);
+            AY = calculateDFT(Ay);
+            AZ = calculateDFT(Az);
 
             float linMagnitude = (float) Math.sqrt(
                     accelerometerReading[0] * accelerometerReading[0] +
@@ -257,6 +431,14 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             gyroscopeDataY.addValue(gyroscopeReading[1]);
             gyroscopeDataZ.addValue(gyroscopeReading[2]);
 
+            Gx = gyroscopeReading[0];
+            Gy = gyroscopeReading[1];
+            Gz = gyroscopeReading[2];
+
+            GX = calculateDFT(Gx);
+            GY = calculateDFT(Gy);
+            GZ = calculateDFT(Gz);
+
             float gyroMagnitude = (float) Math.sqrt(gyroscopeReading[0] * gyroscopeReading[0] + gyroscopeReading[1] * gyroscopeReading[1]
                     + gyroscopeReading[2] * gyroscopeReading[2]);
 
@@ -308,6 +490,13 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             Log.d("Skewness", "Accelerometer Skewness: " + accSkew);
             Log.d("Skewness", "Gyroscope Skewness: " + gyroSkew);
             Log.d("Kurtosis", "Gyroscope Kurtosis: " + gyroKurt);
+
+            Log.d("Accelerometer", "Accelerometer X: " + Ax);
+            Log.d("Accelerometer", "Accelerometer Y: " + Ay);
+            Log.d("Accelerometer", "Accelerometer Z: " + Az);
+            Log.d("Gyroscope", "Gyroscope X: " + Gx);
+            Log.d("Gyroscope", "Gyroscope Y: " + Gy);
+            Log.d("Gyroscope", "Gyroscope Z: " + Gz);
         }
 
     }
@@ -317,9 +506,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
     }
 
     private void sendSensorData() {
-        // Calculate linear acceleration magnitude
 
-        // Create JSON request body
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("acc_max", accMax);
@@ -335,7 +522,6 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             e.printStackTrace();
         }
 
-        // Send JSON request using Volley
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL, jsonBody,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -343,9 +529,10 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                         try {
                             String fall = response.getString("fall");
                             if (fall.equals("1")) {
-                                textView.setText("Fall Detected");
+                                //textView.setText("Fall Detected");
+                                checkForFall(fall);
                             } else {
-                                textView.setText("No Fall Detected");
+                                //textView.setText("No Fall Detected");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -364,8 +551,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                 return headers;
             }
         };
-        queue.add(request);
-        // Reset sensor data
+
         accMax = 0;
         gyroMax = 0;
         accKurt = 0;
@@ -376,36 +562,187 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
         postGyroMax = 0;
         postLinMax = 0;
 
+        JSONObject jsonBody2 = new JSONObject();
+        try {
+            jsonBody2.put("AX", AX);
+            jsonBody2.put("AY", AY);
+            jsonBody2.put("AZ", AZ);
+            jsonBody2.put("GX", GX);
+            jsonBody2.put("GY", GY);
+            jsonBody2.put("GZ", GZ);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.POST, URL2, jsonBody2,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String activity = response.getString("predicted_activity");
+                            //activity_result.setText(activity);
+                            checkForNoActivity(activity);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e(TAG, "Error: " + volleyError.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        queue.add(request);
+        queue.add(request2);
+
+    }
+
+    private void checkForNoActivity(String apiResponse) {
+        if (apiResponse.equals("No Activity")) {
+            if (noActivityStartTime == 0) {
+                noActivityStartTime = System.currentTimeMillis();
+            } else {
+                long currentTime = System.currentTimeMillis();
+                if ((currentTime - noActivityStartTime) / 1000 >= NO_ACTIVITY_THRESHOLD) {
+                    // generate alert
+                    showAlert();
+                    noActivityStartTime = 0;
+                }
+            }
+        } else {
+            noActivityStartTime = 0;
+        }
     }
 
 
-//    private void add_to_database(String fullname, String phoneno, String account_type, String gender,
-//                                 String weight, String feet, String inches, String blood_group,
-//                                 String emergency_no, String medical_info){
-//
-//        userInfo.setUser_full_name(fullname);
-//        userInfo.setUser_phone_no(phoneno);
-//        userInfo.setAccount_type(account_type);
-//        userInfo.setGender(gender);
-//        userInfo.setWeight(weight);
-//        userInfo.setFeet(feet);
-//        userInfo.setInches(inches);
-//        userInfo.setBlood_group(blood_group);
-//        userInfo.setEmergency_contact(emergency_no);
-//        userInfo.setMedical_info(medical_info);
-//
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                databaseReference.setValue(userInfo);
-//                Toast.makeText(Dashboard.this, "Data added.", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(Dashboard.this, "Data not added. Try again.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+
+    private void showAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
+        builder.setTitle("No Activity Alert")
+                .setMessage("You have not performed any activity for 30 seconds.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle alert response
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    private float calculateDFT(double value) {
+        FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
+        Complex[] complexDFT = transformer.transform(new double[]{value}, TransformType.FORWARD);
+
+        float dftMagnitude = (float) complexDFT[0].abs();
+
+        return dftMagnitude;
+    }
+
+    private void checkForFall(String response) {
+        if (response.equals("1") && !isAlertShowing){
+            showFallAlert();
+        }
+    }
+
+    private void showFallAlert() {
+        isAlertShowing = true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Fall detected. Are you okay?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        isAlertShowing = false;
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        isAlertShowing = false;
+                        contactEmergencyServices();
+                    }
+                });
+        builder.setCancelable(false);
+        final AlertDialog alert = builder.create();
+        alert.show();
+
+        // Set a timer to automatically dismiss the alert after 30 seconds
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (alert.isShowing()) {
+                            alert.dismiss();
+                            isAlertShowing = false;
+                            // User did not respond within 30 seconds
+                            showSecondFallAlert();
+                        }
+                    }
+                });
+            }
+        }, 10000);
+    }
+
+    private void showSecondFallAlert() {
+        isAlertShowing = true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Fall detected. Are you okay?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        isAlertShowing = false;
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        isAlertShowing = false;
+                        //contactEmergencyServices();
+                    }
+                });
+        builder.setCancelable(false);
+        final AlertDialog alert = builder.create();
+        alert.show();
+
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (alert.isShowing()) {
+                            alert.dismiss();
+                            isAlertShowing = false;
+                            //contactEmergencyServices();
+                        }
+                    }
+                });
+            }
+        }, 10000);
+    }
+
+    private void contactEmergencyServices() {
+        // code to contact emergency services
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(Dashboard.this, "Contacting emergency services", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        String phoneNumber = emergency_no;
+        String message = "Emergency: Fall detected";
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+    }
+
 
 }
