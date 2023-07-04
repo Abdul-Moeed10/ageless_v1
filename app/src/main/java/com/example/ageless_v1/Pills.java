@@ -4,12 +4,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -32,6 +35,8 @@ public class Pills extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pill_reminder);
 
+        createNotificationChannel();
+
         Button addReminderButton = findViewById(R.id.add_reminder_button);
         addReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,20 +49,20 @@ public class Pills extends AppCompatActivity {
     }
 
     private void showAddReminderDialogue() {
-        LinearLayout dialogueLayout = new LinearLayout(this);
+        LinearLayout dialogueLayout = new LinearLayout(Pills.this);
         dialogueLayout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText reminderNameEditText = new EditText(this);
+        final EditText reminderNameEditText = new EditText(Pills.this);
         reminderNameEditText.setHint("Reminder Name");
         dialogueLayout.addView(reminderNameEditText);
 
-        final TimePicker reminderTimePicker = new TimePicker(this);
+        final TimePicker reminderTimePicker = new TimePicker(Pills.this);
         dialogueLayout.addView(reminderTimePicker);
 
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         final boolean[] selectedDays = new boolean[days.length];
         for (int i = 0; i < days.length; i++) {
-            CheckBox dayCheckBox = new CheckBox(this);
+            CheckBox dayCheckBox = new CheckBox(Pills.this);
             dayCheckBox.setText(days[i]);
             final int index = i;
             dayCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -69,7 +74,7 @@ public class Pills extends AppCompatActivity {
             dialogueLayout.addView(dayCheckBox);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Pills.this);
         builder.setTitle("Add Reminder")
                 .setView(dialogueLayout)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
@@ -146,7 +151,7 @@ public class Pills extends AppCompatActivity {
     }
 
     private void insertReminder(Reminder reminder) {
-        ReminderDatabaseHelper dbHelper = new ReminderDatabaseHelper(this);
+        ReminderDatabaseHelper dbHelper = new ReminderDatabaseHelper(Pills.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -162,7 +167,7 @@ public class Pills extends AppCompatActivity {
     private List<Reminder> getReminders() {
         List<Reminder> reminders = new ArrayList<>();
 
-        ReminderDatabaseHelper dbHelper = new ReminderDatabaseHelper(this);
+        ReminderDatabaseHelper dbHelper = new ReminderDatabaseHelper(Pills.this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query("reminders", null, null, null, null, null, null);
@@ -183,7 +188,7 @@ public class Pills extends AppCompatActivity {
     }
 
     private void deleteReminder(Reminder reminder) {
-        ReminderDatabaseHelper dbHelper = new ReminderDatabaseHelper(this);
+        ReminderDatabaseHelper dbHelper = new ReminderDatabaseHelper(Pills.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         String whereClause = "name=? AND time=? AND days=?";
@@ -204,15 +209,27 @@ public class Pills extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-        Intent intent = new Intent(this, ReminderBroadcastReceiver.class);
+        Intent intent = new Intent(Pills.this, ReminderBroadcastReceiver.class);
         intent.putExtra(ReminderBroadcastReceiver.REMINDER_NAME_EXTRA, reminder.getName());
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(Pills.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Reminder";
+            String description = "Reminder notifications";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("reminder_channel", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 
 

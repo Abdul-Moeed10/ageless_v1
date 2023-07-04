@@ -9,19 +9,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="10dp">
+
+<!--        <Button-->
+<!--            android:id="@+id/add_reminder_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Add Reminder" />-->
 
         <Button
             android:id="@+id/add_reminder_button"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Add Reminder" />
+            android:background="@drawable/registration_button"
+            android:fontFamily="@font/inter"
+            android:text="Add Reminder"
+            android:textAllCaps="false"
+            android:textColor="#f7f9fb"
+            android:layout_margin="10dp"
+            android:textSize="@dimen/_14sdp" />
+
+<!--        <Button-->
+<!--            android:id="@+id/delete_reminder_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Delete Reminder" />-->
 
         <Button
             android:id="@+id/delete_reminder_button"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Delete Reminder" />
+            android:background="@drawable/registration_button"
+            android:fontFamily="@font/inter"
+            android:text="Delete Reminder"
+            android:textAllCaps="false"
+            android:textColor="#f7f9fb"
+            android:layout_margin="10dp"
+
+            android:textSize="@dimen/_14sdp"/>
     </LinearLayout>
 
     <ScrollView
