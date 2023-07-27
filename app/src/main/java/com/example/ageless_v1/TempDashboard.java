@@ -81,12 +81,12 @@ public class TempDashboard extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 databaseReference.setValue(userInfo);
-                Toast.makeText(TempDashboard.this, "Data added.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TempDashboard.this, "Data added.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(TempDashboard.this, "Data not added. Try again.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TempDashboard.this, "Data not added. Try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }

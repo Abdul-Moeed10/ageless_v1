@@ -7,6 +7,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,13 +20,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +41,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -66,11 +78,11 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
     private String uid;
     private UserInfo userInfo = new UserInfo();
 
-    private Button sign_out;
+    private ImageView sign_out;
 
     private TextView phone_no, user_name, sample3;
 
-    LinearLayout ambulance, emergency_contact, pills, steps, to_do, settings;
+    LinearLayout ambulance, emergency_contact, pills, to_do, maps, settings;
 
 
     private SensorManager sensorManager;
@@ -128,32 +140,41 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
     private boolean isAlertShowing = false;
 
 
-    private static final int NO_ACTIVITY_THRESHOLD = 60; // in seconds
+    private static final int NO_ACTIVITY_THRESHOLD = 3600; // in seconds
     private long noActivityStartTime = 0;
 
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
-    private static final int REQUEST_CALL_PHONE = 2;
+
+    int ALL_PERMISSIONS = 101;
+    final String[] permissions = new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION};
 
     //URL FOR MY HOTSPOT
-    //private static final String URL = "http://172.20.10.2:3000/fall_predict";
-    //private static final String URL = "http://172.20.10.2:3000/activity_predict";
+    private static final String URL = "http://172.20.10.2:3000/fall_predict";
+    private static final String URL2 = "http://172.20.10.2:3000/activity_predict";
 
     //URL FOR HOME WIFI
-    private static final String URL = "http://192.168.100.64:3000/fall_predict";
-    private static final String URL2 = "http://192.168.100.64:3000/activity_predict";
+//    private static final String URL = "http://192.168.100.64:3000/fall_predict";
+//    private static final String URL2 = "http://192.168.100.64:3000/activity_predict";
 
     //URL FOR GAME LAB
     //private static final String URL = "http://192.168.0.140:3000/fall_predict";
-    //private static final String URL = "http://192.168.0.140:3000/activity_predict";
+    //private static final String URL2 = "http://192.168.0.140:3000/activity_predict";
 
     //URL FOR SZABIST WIFI
     //static final String URL = "http://172.16.226.162:3000/fall_predict";
-    //static final String URL = "http://172.16.226.162:3000/activity_predict";
+    //static final String URL2 = "http://172.16.226.162:3000/activity_predict";
+
+    private GoogleMap googleMap;
+    String link;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        createNotificationChannel();
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -163,26 +184,21 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
         ambulance = findViewById(R.id.ambulance);
         emergency_contact = findViewById(R.id.emergency_contact);
         pills = findViewById(R.id.pills);
-        steps = findViewById(R.id.steps);
+        maps = findViewById(R.id.maps);
         to_do = findViewById(R.id.to_do);
         settings = findViewById(R.id.settings);
 
         user_name = findViewById(R.id.user_name);
-        //sample3 = findViewById(R.id.sample3);
-        //sign_out = findViewById(R.id.sign_out);
+        sign_out = findViewById(R.id.sign_out);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+
+        if (!hasPermissions(this, permissions)) {
+            ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS);
         } else {
-            // Permission has already been granted
-            // ...
-        }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PHONE);
-        } else {
-            // Permission already granted
         }
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -190,35 +206,14 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("user_full_name").getValue(String.class);
                 emergency_no = dataSnapshot.child("user_phone_no").getValue(String.class);
-                //String account = dataSnapshot.child("account_type").getValue(String.class);
-//                sample.setText(name);
                 user_name.setText(name);
-                //phone_no = emergency_no;
-                //sample3.setText(account);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // handle error
             }
         });
 
-
-        SharedPreferences sharedPreferences = getSharedPreferences("Ageless", MODE_PRIVATE);
-
-        String fullname = sharedPreferences.getString("user_fullname", "");
-        String phoneno = sharedPreferences.getString("user_phoneno", "");
-        String account_type = sharedPreferences.getString("account_type", "");
-        String gender = sharedPreferences.getString("gender", "");
-        String weight = sharedPreferences.getString("weight", "");
-        String feet = sharedPreferences.getString("feet", "");
-        String inches = sharedPreferences.getString("inches", "");
-        String blood_group = sharedPreferences.getString("blood_group", "");
-        String emergency_no = sharedPreferences.getString("emergency_no", "");
-        String medical_info = sharedPreferences.getString("medical_info", "");
-
-//        add_to_database(fullname, phoneno, account_type, gender, weight,
-//                feet, inches, blood_group, emergency_no, medical_info);
 
         accelerometerDataX = new DescriptiveStatistics();
         accelerometerDataY = new DescriptiveStatistics();
@@ -236,14 +231,15 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
 
         startSensorUpdates();
 
-//        sign_out.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                firebaseAuth.signOut();
-//                Intent intent = new Intent(Dashboard.this, Login.class);
-//                startActivity(intent);
-//            }
-//        });
+        sign_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                stopSensorUpdates();
+                Intent intent = new Intent(Dashboard.this, Login.class);
+                startActivity(intent);
+            }
+        });
 
         ambulance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,6 +249,11 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(Dashboard.this, "Calling Ambulance", Toast.LENGTH_SHORT).show();
+//                                String phoneNumber = "02132413232";
+//                                Toast.makeText(Dashboard.this, "Calling Emergency Contact", Toast.LENGTH_SHORT).show();
+//                                Intent intent = new Intent(Intent.ACTION_CALL);
+//                                intent.setData(Uri.parse("tel:" + phoneNumber));
+//                                startActivity(intent);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -270,7 +271,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
-                builder.setMessage("Do you want to call your emergency contact??")
+                builder.setMessage("Do you want to call your emergency contact?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String phoneNumber = emergency_no;
@@ -298,35 +299,43 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                 startActivity(intent);
             }
         });
+        
+        maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, Maps.class);
+                startActivity(intent);
+            }
+        });
+
+        to_do.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, To_do.class);
+                startActivity(intent);
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, Settings.class);
+                startActivity(intent);
+            }
+        });
 
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission was granted
-                    // ...
-                } else {
-                    // Permission denied
-                    // ...
-                }
-                return;
-            }
-
-            case REQUEST_CALL_PHONE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission was granted
-                    // ...
-                } else {
-                    // Permission denied
-                    // ...
+    private boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
                 }
             }
         }
+        return true;
     }
+
 
 
     private void startSensorUpdates() {
@@ -344,7 +353,8 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
     }
 
     private void stopSensorUpdates() {
-        sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(this,accelerometer);
+        sensorManager.unregisterListener(this,gyroscope);
     }
 
     @Override
@@ -402,7 +412,6 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                 accSkew = skewnessZ;
             }
 
-            // Calculate accelerometer kurtosis
             Kurtosis accelerometerKurtosisX = new Kurtosis();
             Kurtosis accelerometerKurtosisY = new Kurtosis();
             Kurtosis accelerometerKurtosisZ = new Kurtosis();
@@ -484,7 +493,6 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                 gyroKurt = gyroscopeKurtosisZValue;
             }
 
-// Print the results
 
             Log.d("Kurtosis", "Accelerometer Kurtosis: " + accKurt);
             Log.d("Skewness", "Accelerometer Skewness: " + accSkew);
@@ -581,6 +589,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                         try {
                             String activity = response.getString("predicted_activity");
                             //activity_result.setText(activity);
+                            createNotification();
                             checkForNoActivity(activity);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -649,6 +658,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
 
     private void checkForFall(String response) {
         if (response.equals("1") && !isAlertShowing){
+            getCurrentLocation();
             showFallAlert();
         }
     }
@@ -689,7 +699,7 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                     }
                 });
             }
-        }, 10000);
+        }, 40000);
     }
 
     private void showSecondFallAlert() {
@@ -704,7 +714,8 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         isAlertShowing = false;
-                        //contactEmergencyServices();
+                       // getCurrentLocation();
+                        contactEmergencyServices();
                     }
                 });
         builder.setCancelable(false);
@@ -721,16 +732,39 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
                         if (alert.isShowing()) {
                             alert.dismiss();
                             isAlertShowing = false;
-                            //contactEmergencyServices();
+                           // getCurrentLocation();
+                            contactEmergencyServices();
                         }
                     }
                 });
             }
-        }, 10000);
+        }, 40000);
+    }
+
+
+    private void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            return;
+        }
+
+        fusedLocationProviderClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            link = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+                            Log.d("Current Location", link);
+                            // Do something with the current location
+                        }
+                    }
+                });
     }
 
     private void contactEmergencyServices() {
-        // code to contact emergency services
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -739,9 +773,35 @@ public class Dashboard extends AppCompatActivity implements SensorEventListener 
         });
 
         String phoneNumber = emergency_no;
-        String message = "Emergency: Fall detected";
+        String message = "Emergency: Fall detected\n"+link;
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+    }
+
+    public void createNotification() {
+        Intent intent = new Intent(this, Dashboard.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification noti = new Notification.Builder(this)
+                .setContentTitle("Fall Detected")
+                .setContentText("Open AGELESS to respond").setSmallIcon(R.drawable.logo_icon)
+                .setContentIntent(pIntent)
+                .build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, noti);
+    }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Fall";
+            String description = "Fall notifications";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("fall_channel", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 

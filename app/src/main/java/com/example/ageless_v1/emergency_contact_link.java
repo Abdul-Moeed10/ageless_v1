@@ -50,6 +50,13 @@ public class emergency_contact_link extends Fragment {
             @Override
             public void onClick(View view) {
                 String emergency_no = emergency_phoneno.getText().toString();
+                String regex = "^0[3]\\\\d{9}$";
+                boolean isValidPhoneNumber = emergency_no.matches(regex);
+
+                if (!isValidPhoneNumber) {
+                    Toast.makeText(getActivity(), "Invalid phone number. Please enter a valid 11-digit phone number starting with 03.", Toast.LENGTH_SHORT).show();
+                }
+
                 add_data.putString("emergency_no", emergency_no);
                 add_data.apply();
 

@@ -219,6 +219,8 @@ public class Pills extends AppCompatActivity {
     }
 
 
+
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Reminder";

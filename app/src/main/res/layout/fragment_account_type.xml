@@ -91,7 +91,7 @@
                 android:layout_marginTop="23dp"
                 android:layout_marginBottom="36dp"
                 android:fontFamily="@font/aladin"
-                android:text="Primary User"
+                android:text="Basic User"
                 android:textColor="#222566"
                 android:textSize="30sp" />
 
@@ -123,7 +123,7 @@
                 android:layout_marginEnd="132dp"
                 android:layout_marginBottom="27dp"
                 android:fontFamily="@font/inter"
-                android:text="Person to be taken care of"
+                android:text="Limited Features"
                 android:textSize="@dimen/_8sdp" />
 
         </RelativeLayout>
@@ -161,7 +161,7 @@
                 android:layout_marginTop="19dp"
                 android:layout_marginBottom="40dp"
                 android:fontFamily="@font/aladin"
-                android:text="Contact Person"
+                android:text="Premium User"
                 android:textColor="#222566"
                 android:textSize="30sp" />
 
@@ -192,7 +192,7 @@
                 android:layout_marginEnd="135dp"
                 android:layout_marginBottom="23dp"
                 android:fontFamily="@font/inter"
-                android:text="Person to be contacted in case of emergency"
+                android:text="Full power of AGELESS"
                 android:textColor="#222566"
                 android:textSize="@dimen/_8sdp" />
 

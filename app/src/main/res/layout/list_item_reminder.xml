@@ -11,7 +11,7 @@
         android:id="@+id/reminder_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/black"/>
+        android:buttonTint="#3E3F61"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

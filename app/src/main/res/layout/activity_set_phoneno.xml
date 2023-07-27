@@ -120,7 +120,7 @@
             android:layout_width="@dimen/_150sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/registration_email_background"
-            android:hint="3XX-XXXXXXX"
+            android:hint="03XXXXXXXXX"
             android:inputType="phone"
             android:padding="@dimen/_15sdp"
             android:textColorHint="#95a5a6"
