@@ -83,7 +83,7 @@ public class Account_Type_Fragment extends Fragment {
         userbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String user_type = "Primary User";
+                    String user_type = "Basic User";
                     add_data.putString("account_type", user_type);
                     add_data.apply();
 
@@ -98,6 +98,13 @@ public class Account_Type_Fragment extends Fragment {
 
 
             });
+
+        contactbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "This feature is unavailable", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return viewGroup;

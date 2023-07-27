@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/aladin"
+        android:text="Settings"
+        android:textColor="#3E3F61"
+        android:textSize="28pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/update_name"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:padding="@dimen/_15sdp"
+        android:background="@drawable/registration_email_background"
+        android:hint="Update Name"
+        android:textColorHint="#000000"
+        android:textColor="@color/black"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <EditText
+        android:id="@+id/update_phone"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:background="@drawable/registration_email_background"
+        android:hint="Update Phone Number"
+        android:textColorHint="#000000"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_name" />
+
+    <EditText
+        android:id="@+id/update_emergency"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:background="@drawable/registration_email_background"
+        android:hint="Update Emergency Number"
+        android:textColorHint="#000000"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_phone" />
+
+    <EditText
+        android:id="@+id/update_weight"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:background="@drawable/registration_email_background"
+        android:hint="Update Weight"
+        android:textColorHint="#000000"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_emergency" />
+
+    <EditText
+        android:id="@+id/update_info"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:background="@drawable/registration_email_background"
+        android:hint="Update Medical Information"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/update_weight" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_info">
+
+        <EditText
+            android:id="@+id/update_feet"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="19dp"
+            android:textColor="@color/black"
+            android:background="@drawable/registration_email_background"
+            android:hint="Height (feet)"
+            android:inputType="text"
+            android:padding="@dimen/_15sdp"
+            android:textColorHint="#000000" />
+
+        <EditText
+            android:id="@+id/update_inch"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="19dp"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:background="@drawable/registration_email_background"
+            android:hint="Height (inches)"
+            android:padding="@dimen/_15sdp"
+            android:textColorHint="#000000" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/registration_button"
+        android:fontFamily="@font/inter"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:textColor="#f7f9fb"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

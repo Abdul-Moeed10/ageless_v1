@@ -50,6 +50,12 @@ public class Set_Username extends AppCompatActivity {
 
                 String fullname = user_fullname.getText().toString();
                 String phoneno = user_phoneno.getText().toString();
+                String regex = "^0[3]\\\\d{9}$";
+                boolean isValidPhoneNumber = phoneno.matches(regex);
+
+                if (!isValidPhoneNumber) {
+                    Toast.makeText(Set_Username.this, "Invalid phone number. Please enter a valid 11-digit phone number starting with 03.", Toast.LENGTH_SHORT).show();
+                }
 
                 if(TextUtils.isEmpty(fullname) || TextUtils.isEmpty(phoneno)){
                     Toast.makeText(Set_Username.this, "Please enter details", Toast.LENGTH_SHORT).show();
