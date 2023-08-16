@@ -1,5 +1,5 @@
 # About
-AGELESS is a Final Year Project created by [Abdul Moeed Siddiqui](https://github.com/Abdul-Moeed10) and [Aisha Faheem](https://github.com/AishaFaheem). 
+AGELESS is a Final Year Project created by [Abdul Moeed Siddiqui](https://github.com/Abdul-Moeed10) (1912333) and [Aisha Faheem](https://github.com/AishaFaheem) (1912336). 
 
 The application was created as an all-in-one health app that places great focus on the elderly and terminally ill.
 
